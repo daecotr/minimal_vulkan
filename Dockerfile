@@ -11,8 +11,6 @@ RUN xbps-install -Sy \
 	glfw-devel glm \
 	Vulkan-ValidationLayers
 
-RUN xbps-install -Sy bash
-
 WORKDIR /minimal_vulkan
 
 COPY . .
