@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(Vulkan REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GLFW REQUIRED glfw3)
+find_package(glm REQUIRED)
 
 add_executable(${PROJECT_NAME}
 	${PROJECT_NAME}.cc
@@ -16,9 +17,11 @@ add_executable(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${GLFW_INCLUDE_DIRS}
   ${Vulkan_INCLUDE_DIRS}
+	${glm_INCLUDE_DIRS}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   ${GLFW_LIBRARIES}
   Vulkan::Vulkan
+	glm::glm
 )
