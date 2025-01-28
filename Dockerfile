@@ -8,7 +8,8 @@ RUN xbps-install -Syu
 RUN xbps-install -Sy \
 	mesa-vulkan-radeon vulkan-loader-devel \
 	cmake make clang pkg-config \
-	glfw-devel glm
+	glfw-devel glm \
+	Vulkan-ValidationLayers
 
 RUN xbps-install -Sy bash
 
