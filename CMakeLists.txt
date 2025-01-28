@@ -22,7 +22,3 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   ${GLFW_LIBRARIES}
   Vulkan::Vulkan
 )
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-  VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1
-)

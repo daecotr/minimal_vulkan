@@ -34,6 +34,26 @@ int main(int argc, char *argv[]) {
       throw minvk::Exception{"Failed to create window"};
     }
 
+		std::cout << "Available layers" << std::endl;
+    std::vector<vk::LayerProperties> availableLayers =
+        vk::enumerateInstanceLayerProperties();
+    for (const auto &layerProperties : availableLayers) {
+      std::cout << "- " << layerProperties.layerName << std::endl;
+    }
+
+    vk::ApplicationInfo applicationInfo("", 1, "", 1, VK_API_VERSION_1_3);
+    vk::InstanceCreateInfo instanceCreateInfo({}, &applicationInfo);
+    auto extensions = glfwGetRequiredInstanceExtensions(
+        &instanceCreateInfo.enabledExtensionCount);
+    instanceCreateInfo.ppEnabledExtensionNames = extensions;
+    vk::Instance instance = vk::createInstance(instanceCreateInfo);
+
+    vk::SurfaceKHR surface{};
+    auto glfw_surface = VkSurfaceKHR{surface};
+    if (glfwCreateWindowSurface(VkInstance{instance}, window, nullptr,
+                                &glfw_surface) != VK_SUCCESS)
+      throw minvk::Exception{"Failed to create Vulkan surface"};
+
     for (size_t i = 0; (i < 128) && !glfwWindowShouldClose(window); ++i) {
       glfwPollEvents();
     }
@@ -41,9 +61,11 @@ int main(int argc, char *argv[]) {
     glfwDestroyWindow(window);
     glfwTerminate();
 
+    instance.destroy();
+    
 		std::cout << "Okay" << std::endl;
   } catch (minvk::Exception err) {
-    std::cout << "minvk::Exception: " << err.what() << std::endl;
+    std::cout << "Exception: " << err.what() << std::endl;
     return EXIT_FAILURE;
   }
 
